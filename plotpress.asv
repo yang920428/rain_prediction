@@ -1,0 +1,15 @@
+data = importdata('totalnumdata.txt',' ',0);
+labels = importdata('totallabel.txt',' ',0);
+
+len_data = length(data(:,1));
+% plot(1:1:len_data , data(:,1),'.');
+
+for i=1:len_data
+    if (labels(i))
+        plot(data(i,1),"Color","r",'.');
+        hold on;
+    else
+        plot(data(i,1),"Color","b",'.');
+        hold on;
+    end
+end
