@@ -1,0 +1,48 @@
+clear; clc; close all;
+
+data = importdata('totalnumdata.txt', ' ', 0);
+labels = importdata('totallabel.txt', ' ', 0);
+
+num_sample = size(data , 1);
+
+sample_choose = 3;
+part_num = 28;
+%sample_index = 1+(sample_choose-1)*floor(num_sample/part_num):min((sample_choose)*floor(num_sample/part_num),num_sample);
+%sample_index = union((434*2+1):(434*3) ,union((434*5+1):(434*6) , union((434*9+1):(434*10) , union((434*15+1):(434*16) ,union((434*16+1):(434*17), (434*17+1):(434*18)) ))) );
+sample_set = {(434*2+1):(434*3) , (434*4+1):(434*5) , (434*5+1):(434*6) , (434*8+1):(434*9) , (434*9+1):(434*10) , (434*24+1):(434*25)};
+sample_index = [];
+sample_num = length(sample_set);
+for i=1:length(sample_set)
+    sample_index = union(sample_index , sample_set{i});
+end
+% sample_index = union( sample_set{:} );
+train_data = data(sample_index ,:);
+train_labels = labels(sample_index);
+
+% test_data = data(setdiff(1:num_sample , sample_index ),:);
+% test_labels = labels(setdiff(1:num_sample , sample_index));
+test_data = data(setdiff(1:num_sample , sample_index ),:);
+test_labels = labels(setdiff(1:num_sample , sample_index ));
+
+% training
+numTrees = 50;
+Mdl = TreeBagger(numTrees, train_data, train_labels, 'Method', 'classification');
+
+% prediction and test
+predictions = Mdl.predict(test_data);
+final_predictions = zeros(length(predictions), 1);
+for i = 1:length(predictions)
+    final_predictions(i) = str2num(predictions{i});
+end
+table = zeros(2);
+% table(1,1) = sum(test_labels == 1 & final_predictions == 1)/sum(test_labels == 1);
+% table(1,2) = sum(test_labels == -1 & final_predictions == 1)/sum(test_labels == -1);
+% table(2,1) = sum(test_labels == 1 & final_predictions == -1)/sum(test_labels == 1);
+% table(2,2) = sum(test_labels == -1 & final_predictions == -1)/sum(test_labels == -1);
+table(1,1) = sum(test_labels == 1 & final_predictions == 1);
+table(1,2) = sum(test_labels == -1 & final_predictions == 1);
+table(2,1) = sum(test_labels == 1 & final_predictions == -1);
+table(2,2) = sum(test_labels == -1 & final_predictions == -1);
+accuracy = sum(final_predictions == test_labels)/length(test_labels);
+disp(table);
+fprintf('Accuracy: %f%\n', accuracy);
