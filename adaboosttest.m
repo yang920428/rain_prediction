@@ -1,18 +1,29 @@
-clc;clear;close all;
+clc;close all;
 
 data = importdata('totalnumdata.txt', ' ', 0);
 labels = importdata('totallabel.txt', ' ', 0);
 
 num_sample = size(data , 1);
 
-sample_choose = 4;
-part_num = 5;
-sample_index = 1+(sample_choose-1)*floor(num_sample/part_num):min((sample_choose)*floor(num_sample/part_num),num_sample);
+sample_choose = 3;
+part_num = 28;
+%sample_index = 1+(sample_choose-1)*floor(num_sample/part_num):min((sample_choose)*floor(num_sample/part_num),num_sample);
+%sample_index = union((434*2+1):(434*3) ,union((434*5+1):(434*6) , union((434*9+1):(434*10) , union((434*15+1):(434*16) ,union((434*16+1):(434*17), (434*17+1):(434*18)) ))) );
+sample_set = {(434*2+1):(434*3) , (434*4+1):(434*5) , (434*5+1):(434*6) , (434*8+1):(434*9) , (434*9+1):(434*10) , (434*24+1):(434*25)};
+sample_index = [];
+sample_num = length(sample_set);
+for i=1:length(sample_set)
+    sample_index = union(sample_index , sample_set{i});
+end
+% sample_index = union( sample_set{:} );
+disp(length(sample_index));
 train_data = data(sample_index ,:);
 train_labels = labels(sample_index);
 
-test_data = data(setdiff(1:num_sample , sample_index),:);
-test_labels = labels(setdiff(1:num_sample , sample_index));
+% test_data = data(setdiff(1:num_sample , sample_index ),:);
+% test_labels = labels(setdiff(1:num_sample , sample_index));
+test_data = data(setdiff(1:num_sample , sample_index ),:);
+test_labels = labels(setdiff(1:num_sample , sample_index ));
 
 % adaboost
 num_classifiers = 5;
@@ -68,6 +79,8 @@ end
 num_test = length(test_data(:,1));
 ensemble_predictions = zeros(num_test, 1);
 
+% alpha = [0.5 ; 1.3 ; 0 ; 0 ; 0];
+
 for i = 1:num_classifiers
     ensemble_predictions = ensemble_predictions + alpha(i) * Weak{i}(test_data);
 end
@@ -87,5 +100,5 @@ disp(table);
 disp(alpha);
 
 function val = gamma(T , RH , a , b)
-    val = a.*T./(b+T)+log(RH./100);
+    val = a.*T./(b+T)+log10(RH./100);
 end

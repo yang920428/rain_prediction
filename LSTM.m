@@ -4,7 +4,7 @@ X_infor = importdata("totalnumdata.txt");
 X_label = importdata("totallabel.txt");
 X_train = zeros(2431, 6); X_test = zeros(9721, 6);
 Y_train = zeros(2431, 1); Y_test = zeros(9721, 1);
-for i = 1:12152
+for i = 1:length(X_infor(:,1))
     if(mod(i, 5) == 1)
         X_train(ceil(i / 5), :) = X_infor(i, :);
         Y_train(ceil(i / 5)) = X_label(i);
@@ -41,3 +41,4 @@ options = trainingOptions('adam', ...
 
 % 訓練神經網路
 net = trainNetwork(X_train, Y_train, layers, options);
+disp(net);

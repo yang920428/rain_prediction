@@ -1,0 +1,13 @@
+clc;clear;close all;
+
+staname = "D:\\Program_set\\project_zike\\stationname\\site.txt";
+names = readtable(staname, 'Delimiter', '\t', 'ReadVariableNames', true, 'TextType', 'string', 'Encoding', 'UTF-8');
+for t=1:28
+    numname = "D:\\Program_set\\project_zike\\numOnly\\numOnly_"+string(t-1)+".txt";
+    labelname = "D:\\Program_set\\project_zike\\label\\label_"+string(t-1)+".txt";
+
+    test_data = importdata(numname,' ',0);
+    test_labels = importdata(labelname,' ',0);
+    
+    fprintf("city %d name : %s rain: %d  norain: %d rain rate: %f sample : %d\n" , t,names(,sum(test_labels == 1) ,length(test_labels)-sum(test_labels == 1),sum(test_labels == 1)/length(test_labels),length(test_labels));
+end
