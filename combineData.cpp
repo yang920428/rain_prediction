@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(){
-    FILE* output = fopen("D:\\Program_set\\project_zike\\NumOnly\\totalnumdata.txt", "a");
+    FILE* output = fopen("D:\\Program_set\\project_zike\\NumOnly\\totalnumdata.txt", "w");
     for (int i=0 ; i<28 ; i++){
         ifstream input ;
         input.open("D:\\Program_set\\project_zike\\NumOnly\\numOnly_"+to_string(i)+".txt",ios::in);

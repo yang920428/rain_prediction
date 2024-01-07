@@ -1,0 +1,41 @@
+% 讀取數據
+data = importdata('totalnumdata.txt', ' ', 0);
+labels = importdata('totallabel.txt', ' ', 0);
+
+% scatter(1:length(labels) , data(:,3) , '.' , 1:length(labels) , data(:,3) , '.');
+
+for 1 = 1:length(labels)
+% % 提取相對濕度數據
+% humidity = data(:, 3);
+% 
+% % 將相對濕度中labels為1的點標注
+% rainy_points = humidity(labels == 1);
+% non_rainy_points = humidity(labels == 0);
+% 
+% % 計算相對濕度的最大值和最小值
+% max_humidity = max(humidity);
+% min_humidity = min(humidity);
+% 
+% % 將相對濕度切成十份
+% num_bins = 10;
+% humidity_bins = linspace(min_humidity, max_humidity, num_bins + 1);
+% 
+% % 使用 histcounts 函数计算每个區段中下雨和沒下雨的點數
+% hist_rainy = histcounts(rainy_points, humidity_bins);
+% hist_non_rainy = histcounts(non_rainy_points, humidity_bins);
+% 
+% % 绘制直方图
+% figure;
+% bar(humidity_bins(1:end-1), [hist_rainy; hist_non_rainy]', 'hist');
+% xlabel('相對濕度');
+% ylabel('點數');
+% title('相對濕度分佈狀態');
+% 
+% % 添加圖例
+% legend('下雨', '沒下雨');
+% 
+% % 打印統計結果
+% disp('相對濕度分佈統計結果:');
+% for i = 1:num_bins
+%     fprintf('區間 %d: 下雨 %d 點, 沒下雨 %d 點\n', i, hist_rainy(i), hist_non_rainy(i));
+% end

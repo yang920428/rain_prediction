@@ -1,6 +1,6 @@
 import json
 
-json_file_path = "D:\\Program_set\\project_zike\\C-B0024-001.json"
+json_file_path = "D:\\Program_set\\project_zike\\newrawdata.json"
 
 # file = open(json_file_path , "r");
 
